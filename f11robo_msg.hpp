@@ -11,8 +11,8 @@ namespace f11robo
   //struct
   struct velocity_t
   {
-    float liner_x; //4byte
-    float angular_z; //4byte
+    float right_v; //4byte
+    float left_v; //4byte
   };//8byte
   struct rpy_t
   {
@@ -37,7 +37,8 @@ namespace f11robo
   };
   union command_msg_t
   {
-    velocity_t velocity;//8byte
+    float liner_x; //4byte
+    float angular_z; //4byte
     uint8_t data[8];
   };
 } // namespace f11robo
