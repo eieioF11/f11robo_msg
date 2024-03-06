@@ -39,6 +39,27 @@ namespace f11robo
     sensor_data_t sensor_data;//8byte
     bool ems;//1byte
     float32_t battery_voltage;//4byte
+    void set(int i,uint8_t data)
+    {
+      if(i<4)
+        velocity.left_wheel.byte[i]=data;
+      else if(i<8)
+        velocity.right_wheel.byte[i-4]=data;
+      else if(i<12)
+        rpy.roll.byte[i-8]=data;
+      else if(i<16)
+        rpy.pitch.byte[i-12]=data;
+      else if(i<20)
+        rpy.yaw.byte[i-16]=data;
+      else if(i<26)
+        sensor_data.light[i-20]=data;
+      else if(i<28)
+        sensor_data.sw[i-26]=data;
+      else if(i<29)
+        ems=(bool)data;
+      else
+        battery_voltage.byte[i-29]=data;
+    }
     std::vector<uint8_t> get_data()
     {
       std::vector<uint8_t> data;
@@ -60,6 +81,13 @@ namespace f11robo
   {
     float32_t liner_x; //4byte
     float32_t angular_z; //4byte
+    void set(int i,uint8_t data)
+    {
+      if(i<4)
+        liner_x.byte[i]=data;
+      else
+        angular_z.byte[i-4]=data;
+    }
     std::vector<uint8_t> get_data()
     {
       std::vector<uint8_t> data;
