@@ -7,8 +7,14 @@
 
 namespace f11robo
 {
-  const static uint8_t HEADER = 0x01;
-  const static uint8_t END = 0x04;
+  namespace param
+  {
+    constexpr double R = 33.35 * 0.001f; // [m]
+    constexpr double L = 105.0f * 0.001f; // [m]
+  }
+  //
+  constexpr uint8_t HEADER = 0x01;
+  constexpr uint8_t END = 0x04;
   union float32_t
   {
     float data;
