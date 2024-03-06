@@ -9,17 +9,22 @@ namespace f11robo
 {
   const static uint8_t HEADER = 0x01;
   const static uint8_t END = 0x04;
+  union float32_t
+  {
+    float data;
+    uint8_t byte[4];
+  };
   //struct
   struct velocity_t
   {
-    float right_wheel; //4byte
-    float left_wheel; //4byte
+    float32_t right_wheel; //4byte
+    float32_t left_wheel; //4byte
   };//8byte
   struct rpy_t
   {
-    float roll; //4byte
-    float pitch; //4byte
-    float yaw; //4byte
+    float32_t roll; //4byte
+    float32_t pitch; //4byte
+    float32_t yaw; //4byte
   };//12byte
   struct sensor_data_t
   {
@@ -27,19 +32,42 @@ namespace f11robo
     bool sw[2];//2byte
   };//8byte
   //union
-  union sensor_msg_t
+  struct sensor_msg_t
   {
     velocity_t velocity;//8byte
     rpy_t rpy;//12byte
     sensor_data_t sensor_data;//8byte
     bool ems;//1byte
-    float battery_voltage;//4byte
-    uint8_t data[33];
+    float32_t battery_voltage;//4byte
+    std::vector<uint8_t> get_data()
+    {
+      std::vector<uint8_t> data;
+      for (const auto byte : velocity.left_wheel.byte)
+        data.push_back(byte);
+      for (const auto byte : velocity.right_wheel.byte)
+        data.push_back(byte);
+      for (const auto byte : sensor_data.light)
+        data.push_back(byte);
+      for (const auto byte : sensor_data.sw)
+        data.push_back((uint8_t)byte);
+      data.push_back((uint8_t)ems);
+      for (const auto byte : battery_voltage.byte)
+        data.push_back(byte);
+      return data;
+    }
   };
-  union command_msg_t
+  struct command_msg_t
   {
-    float liner_x; //4byte
-    float angular_z; //4byte
-    uint8_t data[8];
+    float32_t liner_x; //4byte
+    float32_t angular_z; //4byte
+    std::vector<uint8_t> get_data()
+    {
+      std::vector<uint8_t> data;
+      for (const auto byte : liner_x.byte)
+        data.push_back(byte);
+      for (const auto byte : angular_z.byte)
+        data.push_back(byte);
+      return data;
+    }
   };
 } // namespace f11robo
