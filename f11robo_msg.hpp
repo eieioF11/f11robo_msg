@@ -67,6 +67,12 @@ namespace f11robo
         data.push_back(byte);
       for (const auto byte : velocity.right_wheel.byte)
         data.push_back(byte);
+      for (const auto byte : rpy.roll.byte)
+        data.push_back(byte);
+      for (const auto byte : rpy.pitch.byte)
+        data.push_back(byte);
+      for (const auto byte : rpy.yaw.byte)
+        data.push_back(byte);
       for (const auto byte : sensor_data.light)
         data.push_back(byte);
       for (const auto byte : sensor_data.sw)
