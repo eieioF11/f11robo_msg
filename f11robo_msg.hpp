@@ -11,8 +11,8 @@ namespace f11robo
   //struct
   struct velocity_t
   {
-    float right_v; //4byte
-    float left_v; //4byte
+    float right_wheel; //4byte
+    float left_wheel; //4byte
   };//8byte
   struct rpy_t
   {
