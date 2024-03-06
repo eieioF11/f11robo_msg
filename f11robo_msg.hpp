@@ -7,7 +7,8 @@
 
 namespace f11robo
 {
-  const static uint8_t HEADER = 0xff;
+  const static uint8_t HEADER = 0x01;
+  const static uint8_t END = 0x04;
   //struct
   struct velocity_t
   {
