@@ -53,7 +53,7 @@ namespace f11robo
   //union
   struct sensor_msg_t
   {
-    constexpr static size_t size = 56;
+    constexpr static size_t size = 57;
     velocity_t velocity;//8byte
     rpy_t rpy;//12byte
     vector3_t acc;//12byte
@@ -61,6 +61,7 @@ namespace f11robo
     sensor_data_t sensor_data;//7byte
     bool ems;//1byte
     float32_t battery_voltage;//4byte
+    bool button;//1byte
     void set(int i,uint8_t data)
     {
       if(i<4)
@@ -91,8 +92,10 @@ namespace f11robo
         sensor_data.sw[i-49]=data;
       else if(i<52)
         ems=data;
-      else
+      else if(i<56)
         battery_voltage.byte[i-52]=data;
+      else
+        button=data;
     }
     std::vector<uint8_t> get_data()
     {
@@ -126,6 +129,7 @@ namespace f11robo
       data.push_back((uint8_t)ems);
       for (const auto byte : battery_voltage.byte)
         data.push_back(byte);
+      data.push_back((uint8_t)button);
       return data;
     }
   };
